@@ -1,0 +1,18 @@
+import hudson.model.*
+import jenkins.model.*
+import hudson.slaves.*
+import hudson.slaves.EnvironmentVariablesNodeProperty.Entry
+def slave = new hudson.slaves.DumbSlave(
+    "{{slave_name}}", "auto generated",
+    "{{slave_home}}",
+    "1", //numOfExecutor,
+    Node.Mode.EXCLUSIVE,
+    "TEST NEW",
+    new hudson.slaves.JNLPLauncher(null, null, null),
+    new hudson.slaves.RetentionStrategy.Always(),
+    new LinkedList()
+)
+Jenkins.instance.addNode(slave)
+if(slave){
+	print slave.computer.jnlpMac // secret
+}
