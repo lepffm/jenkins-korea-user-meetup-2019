@@ -1,0 +1,18 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - uri:
+        url: http://localhost:8080/scriptText
+        return_content: yes
+        method: POST
+        url_username: "admin"
+        url_password: "{{ lookup('env', 'PASS') }}"
+        body:
+          script: "{{ lookup('file','hello.groovy') }}"
+        body_format: form-urlencoded
+        force_basic_auth: yes
+      #delegate_to: localhost
+      register: result
+    - debug:
+        var: result.content
